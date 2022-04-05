@@ -25,6 +25,20 @@ const TodoItem: React.FC<ItoDoItem> = (props) => {
       })
     );
   };
+  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+    if (e.key === "Enter") {
+      setItems(
+        items.map((todo) => {
+          if (todo.id !== id) return todo;
+          return {
+            ...todo,
+            check: !todo.check,
+            title: value,
+          };
+        })
+      );
+    }
+  };
 
   const {
     setItems,
@@ -47,14 +61,14 @@ const TodoItem: React.FC<ItoDoItem> = (props) => {
           checked={complete}
           onChange={() => toggleTodo(id, title)}
         />
-
         <input
           className="text-list"
           type="text-list"
           placeholder={title}
-          value={this}
+          value={value}
           readOnly={check}
-          onChange={(e) => e.target.value}
+          onKeyDown={handleKeyDown}
+          onChange={(e) => setValue(e.target.value)}
         />
       </label>
       <div>
